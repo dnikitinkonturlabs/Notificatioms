@@ -92,8 +92,9 @@ if (window.location.protocol === 'https:' &&
         info.show();
         info_message
             .text('')
-            .append('<strong>'+payload.notification.title+'</strong>')
-            .append('<em> '+payload.notification.body+'</em>')
+            .append('<strong>'+payload.data.title+'</strong>')
+            .append('<strong>'+payload.data.subtitle+'</strong>')
+            .append('<em> '+payload.data.body+'</em>')
         ;
 
         // register fake ServiceWorker for show notification on mobile devices
