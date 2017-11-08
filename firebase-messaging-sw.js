@@ -8,6 +8,7 @@ firebase.initializeApp({
 firebase.messaging();
 
 self.addEventListener('notificationclick', function(event) {
+    console.warn('firebase messaging sw '+ JSON.stringify(event));
     const target = event.notification.data.click_action || '/';
     event.notification.close();
 
