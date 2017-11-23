@@ -14,8 +14,6 @@ var info_message = $('#info-message');
 var alert = $('#alert');
 var alert_message = $('#alert-message');
 
-var timerId = setInterval(setNotificationDemoBody, 10000);
-
 resetUI();
 
 if (window.location.protocol === 'https:' &&
