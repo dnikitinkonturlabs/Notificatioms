@@ -7,8 +7,6 @@ var bt_register = $('#register');
 var bt_delete = $('#delete');
 var token = $('#token');
 var form = $('#notification');
-var massage_id = $('#massage_id');
-var massage_row = $('#massage_row');
 
 var info = $('#info');
 var info_message = $('#info-message');
@@ -16,23 +14,8 @@ var info_message = $('#info-message');
 var alert = $('#alert');
 var alert_message = $('#alert-message');
 
-var input_body = $('#body');
 var timerId = setInterval(setNotificationDemoBody, 10000);
 
-function setNotificationDemoBody() {
-    if (input_body.val().search(/^It's found today at \d\d:\d\d$/i) !== -1) {
-        var now = new Date();
-        input_body.val('It\'s found today at ' + now.getHours() + ':' + addZero(now.getMinutes()));
-    } else {
-        clearInterval(timerId);
-    }
-}
-
-function addZero(i) {
-    return i > 9 ? i : '0' + i;
-}
-
-setNotificationDemoBody();
 resetUI();
 
 if (window.location.protocol === 'https:' &&
@@ -72,18 +55,6 @@ if (window.location.protocol === 'https:' &&
             .catch(function(error) {
                 showError('Error retrieving Instance ID token.', error);
             });
-    });
-
-    form.on('submit', function(event) {
-        event.preventDefault();
-
-        var notification = {};
-        form.find('input').each(function () {
-            var input = $(this);
-            notification[input.attr('name')] = input.val();
-        });
-
-        sendNotification(notification);
     });
 
     // handle catch the notification on current page
@@ -181,49 +152,6 @@ function getToken() {
         });
 }
 
-
-function sendNotification(notification) {
-    var key = 'AAAAIfV86Lk:APA91bF9ysHTcf_q_ws79Oh_H4ait8Dz6zFNb6TKDGPZ_Gocv2jTzVp9ZI3FM9X-JPlrtTWmtBpBrIIy_nAtuswh8ons88P94Z2d_MD06BFgTKO6nQhTPV8RHRyEOWf3I3pp5wzH-Rf_';
-
-    console.log('Send notification', notification);
-
-    // hide last notification data
-    info.hide();
-    massage_row.hide();
-
-    messaging.getToken()
-        .then(function(currentToken) {
-            fetch('https://fcm.googleapis.com/fcm/send', {
-                'method': 'POST',
-                'headers': {
-                    'Authorization': 'key=' + key,
-                    'Content-Type': 'application/json'
-                },
-                'body': JSON.stringify({
-                    'notification': notification,
-                    'to': currentToken
-                })
-            }).then(function(response) {
-                return response.json();
-            }).then(function(json) {
-                console.log('Response', json);
-
-                if (json.success == 1) {
-                    massage_row.show();
-                    massage_id.text(json.results[0].message_id);
-                } else {
-                    massage_row.hide();
-                    massage_id.text(json.results[0].error);
-                }
-            }).catch(function(error) {
-                showError(error);
-            });
-        })
-        .catch(function(error) {
-            showError('Error retrieving Instance ID token.', error);
-        });
-}
-
 // Send the Instance ID token your application server, so that it can:
 // - send messages back to this app
 // - subscribe/unsubscribe the token from topics
@@ -255,16 +183,12 @@ function updateUIForPushEnabled(currentToken) {
     token.text(currentToken);
     bt_register.hide();
     bt_delete.show();
-    form.show();
 }
 
 function resetUI() {
     token.text('');
     bt_register.show();
     bt_delete.hide();
-    form.hide();
-    massage_row.hide();
-    info.hide();
 }
 
 function updateUIForPushPermissionRequired() {
