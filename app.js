@@ -58,7 +58,7 @@ if (window.location.protocol === 'https:' &&
     // handle catch the notification on current page
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
-        payload.notification.icon = 'https://beacon.konturlabs.com/api/v2/images/logo.png';
+        payload.notification.icon = "https://beacon.konturlabs.com/api/v2/images/logo.png";
         info.show();
         info_message
             .text('')
