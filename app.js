@@ -58,11 +58,11 @@ if (window.location.protocol === 'https:' &&
     // handle catch the notification on current page
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
+        payload.notification.icon = 'https://beacon.konturlabs.com/api/v2/images/logo.png';
         info.show();
         info_message
             .text('')
             .append('<strong>'+payload.notification.title+'</strong>')
-            .append('<strong>'+payload.notification.subtitle+'</strong>')
             .append('<em> '+payload.notification.body+'</em>')
         ;
 
@@ -72,6 +72,7 @@ if (window.location.protocol === 'https:' &&
             if (permission === 'granted') {
                 navigator.serviceWorker.ready.then(function(registration) {
                     payload.notification.data = payload.notification;
+
                     registration.showNotification(payload.notification.title, payload.notification);
                 }).catch(function(error) {
                     // registration failed :(
