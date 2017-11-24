@@ -59,6 +59,7 @@ if (window.location.protocol === 'https:' &&
     messaging.onMessage(function(payload) {
         console.log('Message received. ', payload);
         payload.notification.icon = "https://beacon.konturlabs.com/api/v2/images/logo.png";
+        payload.notification.click_action = "http://www.pdc.org/";
         info.show();
         info_message
             .text('')
