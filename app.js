@@ -28,8 +28,12 @@ close_alert.on('click', function () {
 resetUI();
 
 if (isSafari()) {
+    document.title = 'APNS web push notifications';
+    $('#title').text('APNS web push notifications');
     startWithSafari();
 } else {
+    document.title = 'FCM web push notifications';
+    $('#title').text('FCM web push notifications');
     if (window.location.protocol === 'https:'
             && 'Notification' in window
             && 'serviceWorker' in navigator
