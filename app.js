@@ -17,7 +17,7 @@ var alert = $('#alert');
 var alert_message = $('#alert-message');
 var close_alert = $('#close_alert');
 
-const safariWebServiceURL = 'https://beacon.konturlabs.com/apns';
+const safariWebServiceURL = 'https://beacon.konturlabs.com/api/v2/apns';
 const safariWebsitePushId = 'web.com.disasteralertnetworkllc.disasteralert';
 
 close_alert.on('click', function () {
